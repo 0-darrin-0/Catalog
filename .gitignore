@@ -1,7 +1,4 @@
-bin/Debug/net5.0/Catalog.dll
-bin/Debug/net5.0/Catalog.pdb
-bin/Debug/net5.0/ref/Catalog.dll
-obj/Debug/net5.0/Catalog.csproj.CoreCompileInputs.cache
-obj/Debug/net5.0/Catalog.dll
-obj/Debug/net5.0/Catalog.pdb
-obj/Debug/net5.0/ref/Catalog.dll
+*/**/bin/Debug
+*/**/bin/Release
+*/**/obj/Debug
+*/**/obj/Release
