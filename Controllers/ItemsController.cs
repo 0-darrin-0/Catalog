@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Catalog.Repositories;
-using Catalog.Entities;
 using System.Linq;
 using Catalog.DTOs;
+using Catalog.Entities;
 
 namespace Catalog.Controllers
 {
@@ -39,6 +39,23 @@ namespace Catalog.Controllers
             }
 
             return item.AsDTO();
+        }
+
+        //POST /items
+        [HttpPost()]
+        public ActionResult<ItemDTO> CreateItem(CreateItemDTO itemDTO)
+        {
+            Item item = new()
+            {
+                Id = Guid.NewGuid(),
+                Name = itemDTO.Name,
+                Price = itemDTO.Price,
+                CreatedDate = DateTime.UtcNow
+            };
+
+            repository.CreateItem(item);
+
+            return CreatedAtAction(nameof(GetItem), new { id = item.Id}, item.AsDTO());
         }
     }
 }
