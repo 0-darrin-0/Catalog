@@ -1,3 +1,4 @@
+using System.Collections.Immutable;
 using System;
 using System.Collections.Generic;
 using Catalog.Entities;
@@ -27,7 +28,9 @@ namespace Catalog.Repositories
 
         public void DeleteItem(Guid id)
         {
-            throw new NotImplementedException();
+            var filter = filterBuilder.Eq(item => item.Id, id);
+
+            itemsCollection.DeleteOne(filter);
         }
 
         public Item GetItem(Guid id)
@@ -39,14 +42,14 @@ namespace Catalog.Repositories
 
         public IEnumerable<Item> GetItems()
         {
-            var filter = filterBuilder.Eq(item => item.Id, id);
-
             return itemsCollection.Find(new BsonDocument()).ToList();
         }
 
         public void UpdateItem(Item item)
         {
-            throw new NotImplementedException();
+            var filter = filterBuilder.Eq(existingItem => existingItem.Id, item.Id);
+
+            itemsCollection.ReplaceOne(filter, item);
         }
     }
 }
