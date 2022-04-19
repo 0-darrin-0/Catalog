@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Catalog.Repositories;
 using Catalog.Settings;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -35,12 +36,11 @@ namespace Catalog
 
             BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
             BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String)); 
+            var mongoDBSettings = Configuration.GetSection(nameof(MongoDBSettings)).Get<MongoDBSettings>();
 
             services.AddSingleton<IMongoClient>(serviceProvider => 
             {
-                var settings = Configuration.GetSection(nameof(MongoDBSettings)).Get<MongoDBSettings>();
-
-                return new MongoClient(settings.ConnectionString);
+                return new MongoClient(mongoDBSettings.ConnectionString);
             });
 
             services.AddSingleton<IItemsRepository, MongoDBItemsRepository>();
@@ -48,11 +48,20 @@ namespace Catalog
             services.AddControllers(options => {
                 options.SuppressAsyncSuffixInActionNames = false;
             });
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog", Version = "v1" });
             });
+
+            services.AddHealthChecks().AddMongoDb(
+                mongoDBSettings.ConnectionString,
+                name: "mongodb",
+                timeout:TimeSpan.FromSeconds(3),
+                tags: new[] {
+                    "ready"
+                }
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -74,6 +83,13 @@ namespace Catalog
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health/ready", new HealthCheckOptions {
+                    Predicate = (check) => check.Tags.Contains("ready")
+                });
+
+                endpoints.MapHealthChecks("/health/live", new HealthCheckOptions {
+                    Predicate = (_) => false
+                });
             });
         }
     }
