@@ -41,7 +41,7 @@ namespace Catalog.Repositories
         {
             var filter = filterBuilder.Eq(item => item.Id, id);
 
-            return itemsCollection.Find(filter).SingleOrDefault();
+            return itemsCollection.Find(new BsonDocument()).ToList();
         }
 
         public void UpdateItem(Item item)
