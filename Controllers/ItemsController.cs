@@ -23,7 +23,7 @@ namespace Catalog.Controllers
         [HttpGet]
         public IEnumerable<ItemDTO> GetItems() 
         {
-            var items = repository.GetItems().Select(item => item.AsDTO());
+            var items = repository.GetItemsAsync().Select(item => item.AsDTO());
             return items;
         }
 
@@ -31,7 +31,7 @@ namespace Catalog.Controllers
         [HttpGet("{id}")]
         public ActionResult<ItemDTO> GetItem(Guid id)
         {
-            var item =  repository.GetItem(id);
+            var item =  repository.GetItemAsync(id);
 
             if (item is null)
             {
@@ -53,7 +53,7 @@ namespace Catalog.Controllers
                 CreatedDate = DateTime.UtcNow
             };
 
-            repository.CreateItem(item);
+            repository.CreateItemAsync(item);
 
             return CreatedAtAction(nameof(GetItem), new { id = item.Id}, item.AsDTO());
         }
@@ -62,7 +62,7 @@ namespace Catalog.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateItem(Guid id, UpdateItemDTO itemDTO)
         {
-            var existingItem = repository.GetItem(id);
+            var existingItem = repository.GetItemAsync(id);
             if (existingItem is null)
             {
                 return NotFound();
@@ -74,7 +74,7 @@ namespace Catalog.Controllers
                 Price = itemDTO.Price,
             };
 
-            repository.UpdateItem(updatedItem);
+            repository.UpdateItemAsync(updatedItem);
 
             return NoContent();
         }
@@ -83,13 +83,13 @@ namespace Catalog.Controllers
         [HttpDelete("{id}")]
         public ActionResult UpdateItem(Guid id)
         {
-            var existingItem = repository.GetItem(id);
+            var existingItem = repository.GetItemAsync(id);
             if (existingItem is null)
             {
                 return NotFound();
             }
 
-            repository.DeleteItem(id);
+            repository.DeleteItemAsync(id);
             return NoContent();
         }
     }
