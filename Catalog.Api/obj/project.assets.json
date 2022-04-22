@@ -6265,11 +6265,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ddyke\\Desktop\\Code Projects\\Catalog\\Catalog.Api\\Catalog.Api.csproj",
+      "projectUniqueName": "c:\\Users\\ddyke\\Desktop\\Code Projects\\Catalog\\Catalog.Api\\Catalog.Api.csproj",
       "projectName": "Catalog.Api",
-      "projectPath": "C:\\Users\\ddyke\\Desktop\\Code Projects\\Catalog\\Catalog.Api\\Catalog.Api.csproj",
+      "projectPath": "c:\\Users\\ddyke\\Desktop\\Code Projects\\Catalog\\Catalog.Api\\Catalog.Api.csproj",
       "packagesPath": "C:\\Users\\ddyke\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ddyke\\Desktop\\Code Projects\\Catalog\\Catalog.Api\\obj\\",
+      "outputPath": "c:\\Users\\ddyke\\Desktop\\Code Projects\\Catalog\\Catalog.Api\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ddyke\\AppData\\Roaming\\NuGet\\NuGet.Config"
