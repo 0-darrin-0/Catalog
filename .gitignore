@@ -2,6 +2,9 @@
 /bin/Release
 /obj/Debug
 /obj/Release
+Catalog.UnitTests/bin
+Catalog.UnitTests/obj
+/obj
 *.exe
 *.pdb
 *.manifest
