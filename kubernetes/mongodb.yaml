@@ -7,7 +7,7 @@ spec:
     matchLabels:
       app: mongodb
   serviceName: "mongodb-service"
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -48,7 +48,7 @@ kind: Service
 metadata:
   name: mongodb-service
 spec:
-  clusterIP: None
+  cluster: None
   selector:
     app: mongodb
   ports:
