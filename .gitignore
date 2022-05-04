@@ -20,3 +20,6 @@ Catalog.Api/obj/Catalog.Api.csproj.nuget.dgspec.json
 Catalog.Api/obj/project.assets.json
 Catalog.Api/obj/Debug/net5.0/Catalog.Api.dll
 Catalog.Api/obj/Debug/net5.0/Catalog.Api.GeneratedMSBuildEditorConfig.editorconfig
+Catalog.Api/bin/Debug/net5.0/Catalog.Api.dll
+Catalog.Api/obj/Debug/net5.0/Catalog.Api.dll
+Catalog.Api/obj/Debug/net5.0/Catalog.Api.GeneratedMSBuildEditorConfig.editorconfig
