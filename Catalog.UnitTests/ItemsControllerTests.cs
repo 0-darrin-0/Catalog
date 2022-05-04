@@ -1,3 +1,4 @@
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Intrinsics.X86;
 using System;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Catalog.UnitTests
         private readonly Random rand = new();
 
         [Fact]
-        public async Task GetItemsAsync_ItemDoesNotExist_ReturnsNotFound()
+        public async Task GetItemAsync_ItemDoesNotExist_ReturnsNotFound()
         {
             var repositoryStub = new Mock<IItemsRepository>();
 
@@ -56,6 +57,26 @@ namespace Catalog.UnitTests
                     expectedItem,
                     options => options.ComparingByMembers<Item>());
             }
+
+        [Fact]
+        public async Task GetItemsAsync_ItemsExist_ReturnsItems()
+            {
+                var expectedItems = new[]{CreateRandomItem(),CreateRandomItem(),CreateRandomItem()};
+
+                repositoryStub.Setup(repo => repo.GetItemsAsync())
+                    .ReturnsAsync(expectedItems);
+
+                var loggerStub = new Mock<ILogger<ItemsController>>();
+                var controller = new ItemsController(repositoryStub.Object, loggerStub.Object);
+
+                var actualItems = await controller.GetItemsAsync();
+
+                actualItems.Should().BeEquivalentTo(
+                    expectedItems,
+                    options => options.ComparingByMembers<Item>()
+                    );
+            }
+
         private Item CreateRandomItem()
         {
             return new()
